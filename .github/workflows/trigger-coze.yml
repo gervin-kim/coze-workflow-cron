@@ -1,17 +1,26 @@
+name: 触发Coze中日韩财经工作流
+on:
+  workflow_dispatch:  # 允许手动触发
+  schedule:
+    # 北京时间 7:30 → UTC 前一天 23:30
+    - cron: '30 23 * * *'
+    # 北京时间 12:00 → UTC 04:00
+    - cron: '0 4 * * *'
+    # 北京时间 18:00 → UTC 10:00
+    - cron: '0 10 * * *'
+
 jobs:
   run-coze-workflow:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 10  # 10分钟超时，覆盖60秒流程
     steps:
       - name: 调用Coze工作流API
         uses: fjogeleit/http-request-action@v1
         with:
-          # 你的API地址不变
+          # 👇 确认这个API地址是你的真实地址，不是就替换
           url: "https://z6kyp5qjzg.coze.site/run"
           method: "POST"
-          # ✅ 用 bearerToken 直接传 Token（去掉 "Bearer " 前缀！）
-          bearerToken: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwOGMwNTVhLWI2OTUtNGZiMi04OTY2LTMzNTFkNmQ4OWE5MyJ9.eyJpc3MiOiJodHRwczovL2FwaS5jb3plLmNuIiwiYXVkIjpbIjYyOGM2MEtjemNxZU5pYlVibWtoejBDRmhEU1dxUXBaIl0sImV4cCI6ODIxMDI2Njg3Njc5OSwiaWF0IjoxNzczNzY1ODM2LCJzdWIiOiJzcGlmZmU6Ly9hcGkuY296ZS5jbi93b3JrbG9hZF9pZGVudGl0eS9pZDo3NjE3NzAxMTM5MTEwMTY2NTY4Iiwic3JjIjoiaW5ib3VuZF9hdXRoX2FjY2Vzc190b2tlbl9pZDo3NjE4MjY2MjU4NjM0NDQwNzQ2In0.gw1BKigYMK_04pQuEn7fEZuZNEQI6I8vXngaptceVB2n8XWd7OTWQqhAekDt2o9fQ77_kgmXJUlnNs4XWTZJHJR30jsFbmgRiJNUUWHQl5NC6-Ae-25_Bu8jTptKSYUCTlHlQ2A5A8rvjyAi_hwlphtkLJh8rmo7RKVBiqO7YYxdmRsMZvIMaG_kWy0nrR6C3YIyReEalx7H7e6nbWPB9Eir9So9WL5ilGzOto9s87RLMXKw9HGyOWsVu2GfPqF2PSaHr4C7zYQiE0lDEyBW08Fi_fIbS0HWlf9aspL_lNJS7wICjn6VQAiAuEKzEOnOmLAoLT-iO0wbyzedNcnKrw
-          # ✅ 单独指定 Content-Type
+          # 👇 已替换成你的真实Token（无Bearer前缀）
+          bearerToken: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwOGMwNTVhLWI2OTUtNGZiMi04OTY2LTMzNTFkNmQ4OWE5MyJ9.eyJpc3MiOiJodHRwczovL2FwaS5jb3plLmNuIiwiYXVkIjpbIjYyOGM2MEtjemNxZU5pYlVibWtoejBDRmhEU1dxUXBaIl0sImV4cCI6ODIxMDI2Njg3Njc5OSwiaWF0IjoxNzczNzY1OTI0LCJzdWIiOiJzcGlmZmU6Ly9hcGkuY296ZS5jbi93b3JrbG9hZF9pZGVudGl0eS9pZDo3NjE3NzAxMTM5MTEwMTY2NTY4Iiwic3JjIjoiaW5ib3VuZF9hdXRoX2FjY2Vzc190b2tlbl9pZDo3NjE4MjY2NjM3MjcxMDQwMDU0In0.DSsMDYZk9KCZIx_ailn5HOQ3x8IoWnp5aQCNIjsHscB-38a1As3H6eKyijbG3CPJOLJjQqeAzg1Jf1V_KX3Wy-vAgqXzOiZBI5eiaIzwkVfn6CSp_a-pIk6px7Tp2R0X6bt8J-f7tUHVuhKaLMOo8Owm5Z5eSngpE8x2zqsGsMNXsPpS4364toq82kQPPGgBU41OydUkMzKbLLBkzeSSlSMOrT9nrhceISbLsUxLO1IL8cpYtxwqaE-0o6yj7MwKrPi5QOlFFet-rWxxJpE4mrpvbWFEhQ0r_5hxtmzR54jCoEOMSjYbVZJNpxSc84DPIC6e5amRLsafbDcfyI_cOQ"
           contentType: "application/json"
-          # 请求体不变
           data: "{}"
