@@ -1,5 +1,6 @@
 name: 触发Coze中日韩财经工作流
 on:
+  workflow_dispatch:  # 👈 新增这一行，允许手动触发
   schedule:
     # 北京时间 7:30 → UTC 前一天 23:30
     - cron: '30 23 * * *'
@@ -10,7 +11,7 @@ on:
 jobs:
   run-coze-workflow:
     runs-on: ubuntu-latest
-    timeout-minutes: 10  # 足够跑你的60秒流程
+    timeout-minutes: 10
     steps:
       - name: 调用Coze工作流API
         uses: fjogeleit/http-request-action@v1
