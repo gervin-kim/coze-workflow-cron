@@ -1,0 +1,27 @@
+name: 触发Coze中日韩财经工作流
+on:
+  schedule:
+    # 北京时间 7:30 → UTC 前一天 23:30
+    - cron: '30 23 * * *'
+    # 北京时间 12:00 → UTC 04:00
+    - cron: '0 4 * * *'
+    # 北京时间 18:00 → UTC 10:00
+    - cron: '0 10 * * *'
+jobs:
+  run-coze-workflow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10  # 足够跑你的60秒流程
+    steps:
+      - name: 调用Coze工作流API
+        uses: fjogeleit/http-request-action@v1
+        with:
+          # 👇 替换成你的工作流API地址（比如你之前的 https://z6kyp5qjzg.coze.site/run）
+          url: "https://z6kyp5qjzg.coze.site/run"
+          method: "POST"
+          headers: |
+            {
+              # 👇 替换成你的API Token（Bearer 后面加空格+你的Token）
+              "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwOGMwNTVhLWI2OTUtNGZiMi04OTY2LTMzNTFkNmQ4OWE5MyJ9.eyJpc3MiOiJodHRwczovL2FwaS5jb3plLmNuIiwiYXVkIjpbIjYyOGM2MEtjemNxZU5pYlVibWtoejBDRmhEU1dxUXBaIl0sImV4cCI6ODIxMDI2Njg3Njc5OSwiaWF0IjoxNzczNzY1MjE1LCJzdWIiOiJzcGlmZmU6Ly9hcGkuY296ZS5jbi93b3JrbG9hZF9pZGVudGl0eS9pZDo3NjE3NzAxMTM5MTEwMTY2NTY4Iiwic3JjIjoiaW5ib3VuZF9hdXRoX2FjY2Vzc190b2tlbl9pZDo3NjE4MjYzNTkwNzA0Nzc1MjA5In0.n5M1pyWJIPINx4R_zWOhM9zrEcIaA0fS7Gg-UFmcNRecCIVZTVkoUPQH-d8nODeG862Q_dqw9U_XfyAiW4TzcuNRTKcvmvabInsuVS1W1wccTzPcg3KZtAmmxJPUqGXxiRFloqIHO5owdW6AGp8Fjy4UrJ2JibiTAR3jA3M04Fmkg49P7yEdkwZXY7oAn_eWdZNKrOMTvms14WtsaCqKwE0T6TjjBH9hi7lauMZuxBcZ5Af45wejCDfYqE6bV4YUurh38vXkymdBe9wM3WM8U4oIZ-xNM1P8B_-Lx_1z39kd1s0PRieOmk0IXEvan2LqDrLmlRRiiGvNAXC_IVw_rQ",
+              "Content-Type": "application/json"
+            }
+          data: "{}"
